@@ -16,9 +16,9 @@ struct HeaderBackground: View {
                 .opacity(findOpacity(headerOffset: geometry.frame(in: .global).minY))
                 .offset(y: -geometry.frame(in: .global).minY)
                 .frame(width: UIScreen.main.bounds.width,
-                       height: max(geometry.frame(in: .global).minY + 265, 0))
+                       height: max(geometry.frame(in: .global).minY + 220, 0))
         }
-        .frame(height: 265)
+        .frame(height: 220)
     }
 
 

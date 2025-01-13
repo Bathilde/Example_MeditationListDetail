@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ListView: View {
+    let meditations: [Meditation]
+
     let detailAction: (Meditation) -> Void
     let playAction: (Meditation) -> Void
     let favoriteAction: (Meditation) -> Void
@@ -34,16 +37,19 @@ struct ListView: View {
             }
             .padding(.horizontal, 36)
 
-            MeditationsCellView(meditation: Meditation(name: "Meditation 1", category: "Category 1", isFavorite: false, transcript: ""), detailAction: detailAction, playAction: playAction, favoriteAction: favoriteAction)
-            MeditationsCellView(meditation: Meditation(name: "Meditation 2", category: "Category 2", isFavorite: true, transcript: ""), detailAction: detailAction, playAction: playAction, favoriteAction: favoriteAction)
-            MeditationsCellView(meditation: Meditation(name: "Meditation 3", category: "Category 3", isFavorite: false, transcript: ""), detailAction: detailAction, playAction: playAction, favoriteAction: favoriteAction)
+            ForEach(meditations, id: \.id) { meditation in
+                MeditationsCellView(meditation: meditation, detailAction: detailAction, playAction: playAction, favoriteAction: favoriteAction)
+            }
 
             Spacer()
         }
     }
 }
 
+@available(iOS 18.0, *)
 #Preview {
-    ListView(detailAction: { _ in}, playAction: { _ in}, favoriteAction: { _ in})
+    @Previewable @Query var meditations: [Meditation]
+    ListView(meditations: meditations,
+             detailAction: { _ in}, playAction: { _ in}, favoriteAction: { _ in})
         .background(Color.backgroundColor)
 }

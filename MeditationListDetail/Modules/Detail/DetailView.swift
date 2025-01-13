@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct DetailView: View {
+    @Environment(AudioPlayerViewModel.self) var audioViewModel
+
     let meditation: Meditation
 
     let backAction: () -> Void
@@ -43,7 +46,7 @@ struct DetailView: View {
                 Button(action: {
                     playAction()
                 }, label: {
-                    Text(Image(systemName: "play.fill"))
+                    Text(Image(systemName: audioViewModel.meditation?.id == meditation.id && audioViewModel.isPlaying ? "pause.fill" : "play.fill"))
                         .font(Font.system(size: 16))
                         .foregroundColor(.primaryTextColor)
                         .frame(width: 32, height: 32)
@@ -76,7 +79,9 @@ struct DetailView: View {
     }
 }
 
-#Preview {
-    DetailView(meditation: Meditation(name: "Meditation 1", category: "Category 1", isFavorite: false, transcript: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sapien quam, euismod sit amet vehicula eget, tincidunt eget nibh. Integer non dictum tellus. Etiam sollicitudin leo felis, ac fringilla ex venenatis sit amet. Quisque placerat massa eget imperdiet aliquet. Morbi vel interdum elit. Fusce sodales velit nec tempor tincidunt. Curabitur sit amet neque suscipit, sagittis dui vel, pellentesque nisi. Suspendisse bibendum eu diam at dignissim.\nNulla facilisi. Ut at nisi congue mi accumsan consequat. Vestibulum vestibulum lorem quis aliquam semper. Nunc lectus leo, interdum quis mattis tristique, convallis a nibh. Aliquam ullamcorper ornare ex, vitae cursus velit pellentesque id. Phasellus cursus neque eu diam sodales auctor. Donec posuere ante a lorem gravida luctus. Etiam purus nunc, fermentum ut augue sed, sodales tincidunt dolor. Nam rhoncus tellus justo, at rhoncus sapien pretium ut. Etiam auctor ex non mauris eleifend auctor. Nam ligula dui, pulvinar eu elementum id, fringilla eu diam. Ut lacinia lectus sed quam imperdiet pulvinar. Nullam facilisis leo eu odio tincidunt, vel mollis urna scelerisque. Nullam nisi nulla, blandit nec erat et, ullamcorper tempus lectus."), backAction: {}, playAction: {}, favoriteAction: {})
+@available(iOS 18.0, *)
+#Preview(traits: .sampleData) {
+    @Previewable @Query var meditations: [Meditation]
+    DetailView(meditation: meditations[0], backAction: {}, playAction: {}, favoriteAction: {})
         .background(Color.backgroundColor)
 }

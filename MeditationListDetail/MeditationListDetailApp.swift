@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct MeditationListDetailApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Screen()
         }
+        .modelContainer(for: Meditation.self)
     }
 }

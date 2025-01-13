@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MeditationsCellView: View {
-
+    @Environment(AudioPlayerViewModel.self) var audioViewModel
+    
     let meditation: Meditation
 
     let detailAction: (Meditation) -> Void
@@ -20,7 +22,7 @@ struct MeditationsCellView: View {
             Button(action: {
                 playAction(meditation)
             }, label: {
-                Text(Image(systemName: "play.fill"))
+                Text(Image(systemName: audioViewModel.meditation?.id == meditation.id && audioViewModel.isPlaying ? "pause.fill" : "play.fill"))
                     .font(Font.system(size: 16))
                     .foregroundColor(.primaryTextColor)
                     .frame(width: 32, height: 32)
@@ -60,11 +62,13 @@ struct MeditationsCellView: View {
     }
 }
 
-#Preview {
+@available(iOS 18.0, *)
+#Preview(traits: .sampleData) {
+    @Previewable @Query var meditations: [Meditation]
     VStack(spacing: 0) {
-        MeditationsCellView(meditation: Meditation(name: "Meditation 1", category: "Category 1", isFavorite: false, transcript: ""), detailAction: { _ in}, playAction: { _ in}, favoriteAction: { _ in})
-        MeditationsCellView(meditation: Meditation(name: "Meditation 2", category: "Category 2", isFavorite: true, transcript: ""), detailAction: { _ in}, playAction: { _ in}, favoriteAction: { _ in})
-        MeditationsCellView(meditation: Meditation(name: "Meditation 3", category: "Category 3", isFavorite: false, transcript: ""), detailAction: { _ in}, playAction: { _ in}, favoriteAction: { _ in})
+        MeditationsCellView(meditation: meditations[0], detailAction: { _ in}, playAction: { _ in}, favoriteAction: { _ in})
+        MeditationsCellView(meditation: meditations[1], detailAction: { _ in}, playAction: { _ in}, favoriteAction: { _ in})
+        MeditationsCellView(meditation: meditations[2], detailAction: { _ in}, playAction: { _ in}, favoriteAction: { _ in})
     }
     .background(Color.backgroundColor)
 }
