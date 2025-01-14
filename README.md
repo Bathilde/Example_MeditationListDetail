@@ -32,14 +32,14 @@ Display the meditation detail, including the transcript of the audio. Still poss
 
 ### TODO
 
-[v] display list view
-[v] display detail view
-[v] add SwiftData integration
-[v] add/remove favorite
-[] filtering by favorite
-[] searching meditations
-[v] playing the audio
-[v] pausing the audio
+- [v] display list view
+- [v] display detail view
+- [v] add SwiftData integration
+- [v] add/remove favorite
+- [] filtering by favorite
+- [] searching meditations
+- [v] playing the audio
+- [v] pausing the audio
 
 ### License
 

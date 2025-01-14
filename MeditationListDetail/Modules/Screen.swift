@@ -17,7 +17,7 @@ struct Screen: View {
     @Environment(\.modelContext) private var modelContext
     @Query var meditations: [Meditation]
     @State var display: Display = .list
-    let playingMeditationViewModel = AudioPlayerViewModel()
+    private let playingMeditationViewModel = AudioPlayerViewModel()
 
     private func initDataIfNeeded() async {
         let fetchDescriptor = FetchDescriptor<Meditation>(sortBy: [SortDescriptor(\.id)])
@@ -32,22 +32,22 @@ struct Screen: View {
         }
     }
 
-    func play(meditation: Meditation) {
+    private func play(meditation: Meditation) {
         playingMeditationViewModel.setUp(meditation: meditation)
     }
 
-    func favorite(meditation: Meditation) {
+    private func favorite(meditation: Meditation) {
         meditation.isFavorite.toggle()
         try? modelContext.save()
     }
 
-    func displayMeditation(meditation: Meditation) {
+    private func displayMeditation(meditation: Meditation) {
         withAnimation {
             display = .detail(meditation)
         }
     }
 
-    func displayList() {
+    private func displayList() {
         withAnimation {
             display = .list
         }

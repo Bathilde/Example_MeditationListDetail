@@ -20,50 +20,27 @@ struct DetailView: View {
     var body: some View {
         VStack(spacing: 16) {
             HStack(alignment: .top, spacing: 12) {
-                Button(action: {
-                    backAction()
-                }, label: {
-                    Text(Image(systemName: "chevron.backward"))
-                        .font(Font.system(size: 16))
-                        .foregroundColor(.primaryTextColor)
-                        .frame(width: 32, height: 32)
-                        .background(Color.buttonColor.cornerRadius(300))
-
-                })
-                .buttonStyle(AnimatedButtonStyle())
+                BackButton(action: backAction)
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(meditation.name)
-                        .font(Font.system(size: 24, weight: .semibold))
+                        .font(Font.system(size: 28, weight: .bold))
                         .foregroundColor(.primaryTextColor)
                     Text(meditation.category)
-                        .font(Font.system(size: 10, weight: .medium))
+                        .font(Font.system(size: 12, weight: .medium))
                         .foregroundColor(.secondaryTextColor)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
 
+                PlayButton(
+                    action: playAction,
+                    isPlaying: audioViewModel.meditation?.id == meditation.id && audioViewModel.isPlaying
+                )
 
-                Button(action: {
-                    playAction()
-                }, label: {
-                    Text(Image(systemName: audioViewModel.meditation?.id == meditation.id && audioViewModel.isPlaying ? "pause.fill" : "play.fill"))
-                        .font(Font.system(size: 16))
-                        .foregroundColor(.primaryTextColor)
-                        .frame(width: 32, height: 32)
-                        .background(Color.buttonColor.cornerRadius(300))
-
-                })
-                .buttonStyle(AnimatedButtonStyle())
-
-                Button(action: {
-                    favoriteAction()
-                }, label: {
-                    Text(Image(systemName: meditation.isFavorite ? "heart.fill" : "heart"))
-                        .font(Font.system(size: 16))
-                        .foregroundColor(.primaryTextColor)
-                        .padding(6)
-                })
-                .buttonStyle(AnimatedButtonStyle())
+                FavoriteButton(
+                    action: favoriteAction,
+                    isFavorite: meditation.isFavorite
+                )
             }
             .padding(.vertical, 8)
             .padding(.horizontal, 36)

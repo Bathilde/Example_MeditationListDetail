@@ -1,0 +1,15 @@
+//
+//  Localizable.strings
+//  MeditationListDetail
+//
+//  Created by Bathilde Rocchia on 14/01/2025.
+//
+
+"List.ListView.title"="Favorite Meditations";
+"List.ListView.description"="This is the place where you can find all your favorite meditations. Enjoy!";
+
+// Accessibility
+"favorite_add" = "You can add as favorite";
+"favorite_remove" = "You can remove as favorite";
+"play" = "Play audio";
+"pause" = "Pause audio";

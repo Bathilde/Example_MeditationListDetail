@@ -19,25 +19,17 @@ struct MeditationsCellView: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            Button(action: {
-                playAction(meditation)
-            }, label: {
-                Text(Image(systemName: audioViewModel.meditation?.id == meditation.id && audioViewModel.isPlaying ? "pause.fill" : "play.fill"))
-                    .font(Font.system(size: 16))
-                    .foregroundColor(.primaryTextColor)
-                    .frame(width: 32, height: 32)
-                    .background(Color.buttonColor.cornerRadius(300))
-
-            })
-            .buttonStyle(AnimatedButtonStyle())
-            .accessibility(label: Text(meditation.name))
+            PlayButton(
+                action: { playAction(meditation) },
+                isPlaying: audioViewModel.meditation?.id == meditation.id && audioViewModel.isPlaying
+            )
 
             Button(action: {
                 detailAction(meditation)
             }, label: {
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 2) {
                     Text(meditation.name)
-                        .font(Font.system(size: 12, weight: .semibold))
+                        .font(Font.system(size: 16, weight: .semibold))
                         .foregroundColor(.primaryTextColor)
                     Text(meditation.category)
                         .font(Font.system(size: 10, weight: .medium))
@@ -45,17 +37,12 @@ struct MeditationsCellView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             })
+            .accessibility(label: Text(meditation.name))
 
-            Button(action: {
-                favoriteAction(meditation)
-            }, label: {
-                Text(Image(systemName: meditation.isFavorite ? "heart.fill" : "heart"))
-                    .font(Font.system(size: 16))
-                    .foregroundColor(.primaryTextColor)
-                    .padding(6)
-            })
-            .buttonStyle(AnimatedButtonStyle())
-            .accessibility(label: Text("favorite_meditation_favorite_remove_action"))
+            FavoriteButton(
+                action: { favoriteAction(meditation) },
+                isFavorite: meditation.isFavorite
+            )
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 36)

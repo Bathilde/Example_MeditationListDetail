@@ -15,22 +15,16 @@ struct AudioPlayerView: View {
         if let meditation = audioViewModel.meditation {
             VStack(spacing: 16) {
                 HStack(spacing: 12) {
-                    Button(action: {
-                        if audioViewModel.isPlaying {
-                            audioViewModel.pause()
-                        } else {
-                            audioViewModel.play()
-                        }
-                    }, label: {
-                        Text(Image(systemName: audioViewModel.isPlaying ? "pause.fill" : "play.fill"))
-                            .font(Font.system(size: 16))
-                            .foregroundColor(.primaryTextColor)
-                            .frame(width: 32, height: 32)
-                            .background(Color.buttonColor.cornerRadius(300))
-
-                    })
-                    .buttonStyle(AnimatedButtonStyle())
-                    .accessibility(label: Text(meditation.name))
+                    PlayButton(
+                        action: {
+                            if audioViewModel.isPlaying {
+                                audioViewModel.pause()
+                            } else {
+                                audioViewModel.play()
+                            }
+                        },
+                        isPlaying: audioViewModel.isPlaying
+                    )
 
                     VStack(alignment: .leading, spacing: 4) {
                         Text(meditation.name)
@@ -42,15 +36,7 @@ struct AudioPlayerView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                Color.secondaryTextColor
-                    .frame(height: 2)
-                    .padding(.vertical, 6)
-                    .overlay(alignment: .leading) {
-                        GeometryReader { proxy in
-                            Color.button.frame(width: 12, height: 12).cornerRadius(12)
-                                .padding(.leading, audioViewModel.audioTotalDuration > 0 ? proxy.size.width * audioViewModel.audioCurrentOffset / audioViewModel.audioTotalDuration : 0)
-                        }
-                    }
+                AudioProgress(percentage: audioViewModel.audioTotalDuration > 0 ? audioViewModel.audioCurrentOffset / audioViewModel.audioTotalDuration : 0)
             }
             .padding(.vertical, 16)
             .padding(.horizontal, 44)

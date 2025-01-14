@@ -18,14 +18,14 @@ struct ListView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: 0) {
-                Text("Favorite Meditations")
-                    .font(Font.system(size: 24, weight: .bold))
+                Text("List.ListView.title")
+                    .font(Font.system(size: 28, weight: .bold))
                     .foregroundColor(.primaryTextColor)
 
-                Text("This is the place where you can find all your favorite meditations. Enjoy!")
-                    .font(Font.system(size: 14, weight: .medium))
-                    .lineLimit(nil)
+                Text("List.ListView.description")
+                    .font(Font.system(size: 12, weight: .medium))
                     .foregroundColor(.secondaryTextColor)
+                    .lineLimit(nil)
                     .padding(.top, 4)
 
                 Rectangle()
