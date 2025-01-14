@@ -9,7 +9,17 @@ import SwiftUI
 import SwiftData
 
 struct ListView: View {
-    let meditations: [Meditation]
+    @Query(sort: \Meditation.id)
+    var meditations: [Meditation]
+    @State var search: String = ""
+    @State var isFavorite: Bool = false
+
+    var filteredMeditations: [Meditation] {
+        meditations.filter({
+            ((isFavorite && $0.isFavorite) || !isFavorite)
+            && (search.isEmpty || $0.name.contains(search) || $0.category.contains(search))
+        })
+    }
 
     let detailAction: (Meditation) -> Void
     let playAction: (Meditation) -> Void
@@ -17,7 +27,7 @@ struct ListView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text("List.ListView.title")
                     .font(Font.system(size: 28, weight: .bold))
                     .foregroundColor(.primaryTextColor)
@@ -32,13 +42,35 @@ struct ListView: View {
                     .frame(height: 1)
                     .foregroundColor(.secondaryTextColor)
                     .padding(.top, 20)
-                    .padding(.bottom, 16)
+                    .padding(.bottom, 8)
+
+                HStack(spacing: 8) {
+                    TextField("🔎 Search", text: $search)
+                        .font(Font.system(size: 12, weight: .medium))
+                        .foregroundColor(.secondaryTextColor)
+                        .padding(2)
+                        .background(alignment: .bottom) {
+                            Color.secondaryTextColor.frame(height: 1)
+                        }
+                        .padding(8)
+
+                    FavoriteButton(
+                        action: { isFavorite.toggle() },
+                        isFavorite: isFavorite
+                    )
+                }
 
             }
             .padding(.horizontal, 36)
+            .padding(.bottom, 12)
 
-            ForEach(meditations, id: \.id) { meditation in
-                MeditationsCellView(meditation: meditation, detailAction: detailAction, playAction: playAction, favoriteAction: favoriteAction)
+            ForEach(filteredMeditations, id: \.id) { meditation in
+                MeditationsCellView(
+                    meditation: meditation,
+                                    detailAction: detailAction,
+                                    playAction: playAction,
+                                    favoriteAction: favoriteAction
+                )
             }
 
             Spacer()
@@ -47,9 +79,9 @@ struct ListView: View {
 }
 
 @available(iOS 18.0, *)
-#Preview {
-    @Previewable @Query var meditations: [Meditation]
-    ListView(meditations: meditations,
-             detailAction: { _ in}, playAction: { _ in}, favoriteAction: { _ in})
+#Preview(traits: .sampleData) {
+    @Previewable var audioEnv = AudioPlayerViewModel()
+    ListView(detailAction: { _ in}, playAction: { _ in}, favoriteAction: { _ in})
         .background(Color.backgroundColor)
+        .environment(audioEnv)
 }

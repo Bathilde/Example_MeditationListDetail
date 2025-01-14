@@ -15,7 +15,6 @@ struct Screen: View {
     }
 
     @Environment(\.modelContext) private var modelContext
-    @Query var meditations: [Meditation]
     @State var display: Display = .list
     private let playingMeditationViewModel = AudioPlayerViewModel()
 
@@ -60,8 +59,7 @@ struct Screen: View {
             VStack(alignment: .leading, spacing: 0) {
                 switch (display) {
                 case .list:
-                    ListView(meditations: meditations,
-                             detailAction: displayMeditation,
+                    ListView(detailAction: displayMeditation,
                              playAction: play,
                              favoriteAction: favorite)
                     .frame(minHeight: 400)

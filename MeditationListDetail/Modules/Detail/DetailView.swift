@@ -59,6 +59,8 @@ struct DetailView: View {
 @available(iOS 18.0, *)
 #Preview(traits: .sampleData) {
     @Previewable @Query var meditations: [Meditation]
+    @Previewable var audioEnv = AudioPlayerViewModel()
     DetailView(meditation: meditations[0], backAction: {}, playAction: {}, favoriteAction: {})
         .background(Color.backgroundColor)
+        .environment(audioEnv)
 }

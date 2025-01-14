@@ -52,10 +52,14 @@ struct MeditationsCellView: View {
 @available(iOS 18.0, *)
 #Preview(traits: .sampleData) {
     @Previewable @Query var meditations: [Meditation]
+    @Previewable var audioEnv = AudioPlayerViewModel()
     VStack(spacing: 0) {
         MeditationsCellView(meditation: meditations[0], detailAction: { _ in}, playAction: { _ in}, favoriteAction: { _ in})
+            .environment(audioEnv)
         MeditationsCellView(meditation: meditations[1], detailAction: { _ in}, playAction: { _ in}, favoriteAction: { _ in})
+            .environment(audioEnv)
         MeditationsCellView(meditation: meditations[2], detailAction: { _ in}, playAction: { _ in}, favoriteAction: { _ in})
+            .environment(audioEnv)
     }
     .background(Color.backgroundColor)
 }
