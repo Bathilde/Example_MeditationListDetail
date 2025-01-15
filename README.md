@@ -6,6 +6,8 @@ Sample project about list/detail view application. Unlike the classical note app
 - showing a meditation detail
 - playing the audio
 
+![Meditation Screenshot List](https://github.com/Bathilde/MeditationListDetail/blob/main/meditation_screenshot_list.png)
+
 ## Installation Requirements & Versions
 
 - Xcode: 16.0
